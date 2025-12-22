@@ -5,20 +5,20 @@ import io.smallrye.common.constraint.NotNull;
 import java.util.List;
 
 public record Quote(
-    String quote,
-    String author,
-    String book,
-    List<String> tags,
-    Integer accessed
+        String quote,
+        String author,
+        String book,
+        List<String> tags,
+        Integer accessed
 ) {
 
     public @NotNull Quote withIncrementedAccess() {
         return new Quote(
-        this.quote,
-        this.author,
-        this.book,
-        this.tags,
-        this.accessed +1
+                this.quote,
+                this.author,
+                this.book,
+                this.tags,
+                this.accessed + 1
         );
     }
 
@@ -50,10 +50,10 @@ public record Quote(
         return capitalizeFirst(author);
     }
 
-    public String getConcepts()  {
+    public String getConcepts() {
         return
-               "concepts=" + tags +
-                '.';
+                "concepts=" + tags +
+                        '.';
     }
 
     public String toFormatedText() {

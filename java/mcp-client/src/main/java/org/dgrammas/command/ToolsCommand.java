@@ -10,7 +10,7 @@ import static java.lang.System.out;
 
 @Command(name = "tools", description = "List available MCP tools")
 public class ToolsCommand implements Runnable{
-    private ToolsService toolsService = new ToolsService();
+    private final ToolsService toolsService = new ToolsService();
 
     @Override
     public void run() {

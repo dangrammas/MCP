@@ -96,7 +96,7 @@ public class ToolsService {
             out.printf("✓ MCP server registration completed. %d server(s) registered%n",
                     mcpClientList.size());
         } catch (IOException e) {
-            err.printf("✗ Failed to read mcp.json configuration: %s%n", e.getMessage());
+            err.printf("⚠ Failed to read mcp.json configuration: %s%n", e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class ToolsService {
             out.printf("  URL: %s, Type: %s%n", url, type);
 
             if (!"sse".equals(type)) {
-                err.printf("✗ Unsupported transport type '%s' for server: %s%n", type, serverName);
+                err.printf("⚠ Unsupported transport type '%s' for server: %s%n", type, serverName);
                 return;
             }
 
@@ -130,7 +130,7 @@ public class ToolsService {
             mcpClientList.add(mcpClient);
             out.printf("✓ Successfully registered MCP server: %s%n", serverName);
         } catch (RuntimeException e) {
-            err.printf("✗ Failed to register MCP server: %s - %s%n", serverName, e.getMessage());
+            err.printf("⚠ Failed to register MCP server: %s - %s%n", serverName, e.getMessage());
         }
     }
 
@@ -161,7 +161,7 @@ public class ToolsService {
             try {
                 t.close();
             } catch (Exception e) {
-                err.printf("✗ Failed to close MCP client %s: %s%n", t.key(), e.getMessage());
+                err.printf("⚠ Failed to close MCP client %s: %s%n", t.key(), e.getMessage());
             } finally {
                 out.printf("✓ MCP client %s closed%n", t.key());
             }

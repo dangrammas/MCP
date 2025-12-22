@@ -14,7 +14,9 @@ public class QuotesService {
     @Inject
     QuotesRepository repository;
 
-    public List<Quote> findAll() { return repository.findAll(); }
+    public List<Quote> findAll() {
+        return repository.findAll();
+    }
 
     public List<Quote> findAllByAuthor(String author) {
         return repository.findAllByAuthor(author);
@@ -30,18 +32,22 @@ public class QuotesService {
         return repository.findRandomQuoteByAuthor(normalAuthor).stream().findFirst();
     }
 
-    public Optional<String> findRandomAuthor() { return repository.findRandomAuthor(); }
+    public Optional<String> findRandomAuthor() {
+        return repository.findRandomAuthor();
+    }
 
     public Optional<Quote> findRandomQuote() {
         return repository.findRandomQuote();
     }
+
     public Optional<Quote> getRandomQuoteByTag(String tag) {
         return repository.getRandomQuoteByTag(tag);
     }
 
-    public Optional<Quote> findRandomQuoteByAuthor(String author ) {
+    public Optional<Quote> findRandomQuoteByAuthor(String author) {
         return repository.findRandomQuoteByAuthor(author);
     }
+
     public String getTags() {
         return repository.getTags();
     }
@@ -50,5 +56,7 @@ public class QuotesService {
         return repository.getSampleTags();
     }
 
-    public String getQuoteDatabaseStats() { return repository.getQuoteDatabaseStats(); }
+    public String getQuoteDatabaseStats() {
+        return repository.getQuoteDatabaseStats();
+    }
 }

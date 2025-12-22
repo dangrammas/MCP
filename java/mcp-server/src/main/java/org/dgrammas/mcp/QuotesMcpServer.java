@@ -106,11 +106,6 @@ public class QuotesMcpServer {
 
     @Tool(name = "get_quote_stats", description = "Find quote stats")
     public String getQuoteDatabaseStats()  {
-        /**
-         * Author count
-         * Most accessed author
-         * Most accessed quotes
-         */
         return quotesService.getQuoteDatabaseStats();
     }
 }

@@ -16,12 +16,12 @@ import static java.lang.System.out;
 public class ChatService {
     private static final String USER = "USER-" + UUID.randomUUID();
 
-    private String model;
-    private String provider;
+    private final String model;
+    private final String provider;
     private ChatModel chatModel;
     private final ToolsService toolsService = new ToolsService();
 
-    private Assistant assistant;
+    private final Assistant assistant;
 
     public ChatService(String provider, String model) {
         this.provider = provider;

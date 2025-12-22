@@ -20,7 +20,7 @@ public class QuotesRepository {
     private final Random random = new Random();
 
     public QuotesRepository() {
-      initialize();
+        initialize();
     }
 
     public List<Quote> findAll() {
@@ -44,6 +44,7 @@ public class QuotesRepository {
 
         return Optional.of(authors.get(random.nextInt(authors.size())));
     }
+
     public Optional<Quote> findRandomQuote() {
         Optional<String> randomAuthor = findRandomAuthor();
         if (randomAuthor.isPresent()) {
@@ -81,9 +82,9 @@ public class QuotesRepository {
     }
 
     public String getSampleTags() {
-            List<String> tags = new ArrayList<>(getTagSet());
-            Collections.shuffle(tags);
-            return tags.stream().limit(10).collect(Collectors.joining(", "));
+        List<String> tags = new ArrayList<>(getTagSet());
+        Collections.shuffle(tags);
+        return tags.stream().limit(10).collect(Collectors.joining(", "));
     }
 
     public String getQuoteDatabaseStats() {
@@ -94,10 +95,8 @@ public class QuotesRepository {
         List<String> authors = findAllAuthors();
         int index = random.nextInt(authors.size());
         sb.append("Random Author:").append(authors.get(index)).append("\n");
-        Optional<Quote> mostAccessed = findAll().stream().max( (Quote a, Quote b) -> Integer.compare(a.accessed(), b.accessed()));
-        if (mostAccessed.isPresent()) {
-            sb.append("Most accessed quote:").append(mostAccessed.get().toDetailsText()).append("\n");
-        }
+        Optional<Quote> mostAccessed = findAll().stream().max((Quote a, Quote b) -> Integer.compare(a.accessed(), b.accessed()));
+        mostAccessed.ifPresent(quote -> sb.append("Most accessed quote:").append(quote.toDetailsText()).append("\n"));
         return sb.toString();
     }
 
@@ -109,7 +108,7 @@ public class QuotesRepository {
                 out.printf("→ Loading quotes from directory: %s%n", mcpConfig.toAbsolutePath());
                 return Files.newInputStream(mcpConfig);
             } catch (IOException e) {
-                err.printf("⚠︎ Failed to read quotes from directory: %s%n",
+                err.printf("⚠ Failed to read quotes from directory: %s%n",
                         e.getMessage());
             }
         }
@@ -120,7 +119,6 @@ public class QuotesRepository {
         }
         return resourceStream;
     }
-
 
 
     private void initialize() {
@@ -150,7 +148,7 @@ public class QuotesRepository {
                 }
                 List<Quote> authorQuotes = quotesDatabase.computeIfAbsent(author.toLowerCase().trim(),
                         l -> new ArrayList<>());
-                authorQuotes.add(new Quote(quoteText,author,book,tags,0));
+                authorQuotes.add(new Quote(quoteText, author, book, tags, 0));
             }
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
