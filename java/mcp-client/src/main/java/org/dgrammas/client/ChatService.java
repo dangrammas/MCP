@@ -31,7 +31,7 @@ public class ChatService {
             chatModel = OllamaChatModel.builder()
                     .baseUrl("http://localhost:11434")
                     .modelName(model)
-                    .timeout(Duration.ofSeconds(10))
+                    .timeout(Duration.ofSeconds(20))
                     .temperature(0.7)
                     .build();
         } else {
@@ -60,7 +60,7 @@ public class ChatService {
             return;
         }
 
-        out.printf("✓ Chat initialized with %s (%s)!\n", provider, model);
+        out.printf("Starting chat with %s (%s)!\n", provider, model);
     }
 
     public boolean isAvailable() {
@@ -76,8 +76,8 @@ public class ChatService {
 
                 💡 Try asking:
 
-                   • 'What philosophers do you know?'
                    • 'Tell me quote'
+                   • 'What philosophers do you know?'
 
                 Type 'exit', 'quit', or 'bye' to end the conversation
                 ───────────────────────────────------------------────
