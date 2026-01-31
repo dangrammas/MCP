@@ -37,6 +37,22 @@ public class QuotesMcpServer {
         }
     }
 
+    @Tool(name = "list authors", description = "List all authors")
+    public String findAllAuthors() {
+        try {
+            List<String> allAuthors = quotesService.findAllAuthors();
+            StringBuilder sb = new StringBuilder();
+
+            for (String name : allAuthors) {
+                sb.append("- ").append(name.toString());
+            }
+
+            return sb.toString();
+        }
+        catch (Exception e) {
+            return "Unable to retrieve authors " + e.getCause();
+        }
+    }
     @Tool(name = "list_quotes_by_author", description = "List all quotes for a particular author")
     public String listAuthorQuotes(String author)  {
         try {
