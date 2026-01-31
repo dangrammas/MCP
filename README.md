@@ -18,7 +18,7 @@ Some of the problems MCP solves include:
 - Scaling
 
 ### 1. Configuration
-- Create Configuration in the root of this project
+- Create Configuration in the root of this project and call it mcp.json
 ```json
 {
   "servers": {
@@ -39,6 +39,7 @@ ollama pull llama3.2
 - Start the Ollama server: `ollama serve`
 
 
+**Start your Java MCP server**: [Java Setup and Test →](./java/README.md)
 
 ## Example Chat Session
 
