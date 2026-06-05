@@ -2,6 +2,7 @@ package org.dgrammas.service;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.dgrammas.model.QuoteResult;
 import org.junit.jupiter.api.Test;
 import org.dgrammas.model.Quote;
 
@@ -22,30 +23,27 @@ public class QuotesServiceTest {
 
         assertNotNull(result);
         assertFalse(result.isEmpty());
-        assertTrue(result.size() > 0);
 
         System.out.println("SIZE="+result.size());
     }
 
     @Test
     void testGetQuoteByAuthor() {
-        Optional<Quote> result = service.getQuoteByAuthor("Seneca");
-        assertTrue(result.isPresent());
-        System.out.println("SIZE="+result.get().toFormatedText());
+        QuoteResult result = service.getQuoteByAuthor("Seneca");
+        System.out.println("SIZE="+result.toFormatedText());
     }
 
     @Test
     void testFindRandomQuote() {
-        Optional<Quote> result = service.findRandomQuote();
-        assertTrue(result.isPresent());
-        System.out.println("SIZE="+result.get().toFormatedText());
+        QuoteResult result = service.findRandomQuote();
+        System.out.println("SIZE="+result.toFormatedText());
     }
 
     @Test
     void testFindAllAuthors() {
         List<String> result = service.findAllAuthors();
         assertFalse(result.isEmpty());
-        System.out.println("All Authors="+result.toString());
+        System.out.println("All Authors="+result);
     }
 
 
@@ -58,9 +56,8 @@ public class QuotesServiceTest {
 
     @Test
     void testFindRandomQuoteByAuthor() {
-        Optional<Quote> result = service.findRandomQuoteByAuthor("Ryan Holiday");
-        assertTrue(result.isPresent());
-        System.out.println("SIZE="+result.get().toFormatedText());
+        QuoteResult result = service.findRandomQuoteByAuthor("Ryan Holiday");
+        System.out.println("SIZE="+result.toFormatedText());
     }
 
     @Test
@@ -81,9 +78,8 @@ public class QuotesServiceTest {
 
     @Test
     void testGetRandomQuoteByTag() {
-        Optional<Quote> result = service.getRandomQuoteByTag("determination");
-        assertTrue(result.isPresent());
-        System.out.println("=>"+result.get().toFormatedText());
+        QuoteResult result = service.getRandomQuoteByTag("determination");
+        System.out.println("=>"+result.toFormatedText());
     }
 
     @Test

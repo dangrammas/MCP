@@ -3,6 +3,7 @@ package org.dgrammas.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.dgrammas.model.Quote;
+import org.dgrammas.model.QuoteResult;
 import org.dgrammas.repository.QuotesRepository;
 
 import java.util.List;
@@ -26,25 +27,25 @@ public class QuotesService {
         return repository.findAllAuthors();
     }
 
-    public Optional<Quote> getQuoteByAuthor(String author) {
+    public QuoteResult getQuoteByAuthor(String author) {
         String normalAuthor = author.toLowerCase().trim();
 
-        return repository.findRandomQuoteByAuthor(normalAuthor).stream().findFirst();
+        return repository.findRandomQuoteByAuthor(normalAuthor);
     }
 
     public Optional<String> findRandomAuthor() {
         return repository.findRandomAuthor();
     }
 
-    public Optional<Quote> findRandomQuote() {
+    public QuoteResult findRandomQuote() {
         return repository.findRandomQuote();
     }
 
-    public Optional<Quote> getRandomQuoteByTag(String tag) {
+    public QuoteResult getRandomQuoteByTag(String tag) {
         return repository.getRandomQuoteByTag(tag);
     }
 
-    public Optional<Quote> findRandomQuoteByAuthor(String author) {
+    public QuoteResult findRandomQuoteByAuthor(String author) {
         return repository.findRandomQuoteByAuthor(author);
     }
 

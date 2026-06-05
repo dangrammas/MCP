@@ -64,7 +64,7 @@ public class ToolsService {
         }
 
         toolProvider = McpToolProvider.builder()
-                .mcpClients(mcpClientList.toArray(new McpClient[mcpClientList.size()]))
+                .mcpClients(mcpClientList.toArray(new McpClient[0]))
                 .build();
 
         out.printf("✓ Tool provider initialized with %d MCP client(s)%n",
@@ -117,7 +117,7 @@ public class ToolsService {
             // Configure SSE transport with longer timeouts to prevent connection issues
             var mcpTransport = new HttpMcpTransport.Builder()
                     .sseUrl(url)
-                    .timeout(Duration.ofSeconds(60)) // Increased timeout for SSE connections
+                    .timeout(Duration.ofSeconds(60*3)) // Increased timeout for SSE connections
                     .logRequests(false)
                     .logResponses(false)
                     .build();

@@ -2,6 +2,7 @@ package org.dgrammas.repository;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.dgrammas.model.Quote;
+import org.dgrammas.model.QuoteResult;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -28,12 +29,14 @@ public class QuotesRepository {
     }
 
     public List<Quote> findAllByAuthor(String author) {
-        return new ArrayList<>(quotesDatabase.get(author.trim()).stream().toList());
+        List<Quote> quotes = quotesDatabase.getOrDefault(author.trim(),Collections.emptyList());
+
+        return new ArrayList<>(quotes);
     }
 
     public List<String> findAllAuthors() {
         return new ArrayList<>(quotesDatabase.keySet().stream()
-                .map(Quote::capitalizeFirst).toList());
+                .map(QuoteResult::capitalizeFirst).toList());
     }
 
     public Optional<String> findRandomAuthor() {
@@ -45,29 +48,31 @@ public class QuotesRepository {
         return Optional.of(authors.get(random.nextInt(authors.size())));
     }
 
-    public Optional<Quote> findRandomQuote() {
+    public QuoteResult findRandomQuote() {
         Optional<String> randomAuthor = findRandomAuthor();
         if (randomAuthor.isPresent()) {
             return findRandomQuoteByAuthor(randomAuthor.get());
         }
-        return Optional.empty();
+        throw new IllegalStateException("No quote authors available");
     }
 
-    public Optional<Quote> findRandomQuoteByAuthor(String author) {
+    public QuoteResult  findRandomQuoteByAuthor(String author) {
         String normalizedAuthor = author.toLowerCase().trim();
         List<Quote> authorQuotes = quotesDatabase.get(normalizedAuthor);
-        if (authorQuotes.isEmpty()) return Optional.empty();
+        if (authorQuotes == null || authorQuotes.isEmpty()) {
+            throw new IllegalStateException("No quote authors available");
+        }
         int index = random.nextInt(authorQuotes.size());
         Quote updatedQuote = quotesDatabase.get(normalizedAuthor).get(index).withIncrementedAccess();
         authorQuotes.set(index, updatedQuote);
         quotesDatabase.replace(normalizedAuthor, authorQuotes);
-        return Optional.of(updatedQuote);
+        return updatedQuote.toResult();
     }
 
-    public Optional<Quote> getRandomQuoteByTag(String tag) {
+    public QuoteResult getRandomQuoteByTag(String tag) {
         List<Quote> quotes = new ArrayList<>(findAll().stream().filter(p -> p.tags().contains(tag)).toList());
         Collections.shuffle(quotes);
-        return quotes.stream().findFirst();
+        return quotes.stream().findFirst().orElseThrow().toResult();
     }
 
     public Set<String> getTagSet() {
@@ -96,7 +101,7 @@ public class QuotesRepository {
         int index = random.nextInt(authors.size());
         sb.append("Random Author:").append(authors.get(index)).append("\n");
         Optional<Quote> mostAccessed = findAll().stream().max((Quote a, Quote b) -> Integer.compare(a.accessed(), b.accessed()));
-        mostAccessed.ifPresent(quote -> sb.append("Most accessed quote:").append(quote.toDetailsText()).append("\n"));
+        mostAccessed.ifPresent(quote -> sb.append("Most accessed quote:").append(mostAccessed.get().toResult().toDetailsText()).append("\n"));
         return sb.toString();
     }
 

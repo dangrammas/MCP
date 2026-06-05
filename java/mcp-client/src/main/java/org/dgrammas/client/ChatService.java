@@ -31,7 +31,7 @@ public class ChatService {
             chatModel = OllamaChatModel.builder()
                     .baseUrl("http://localhost:11434")
                     .modelName(model)
-                    .timeout(Duration.ofSeconds(20))
+                    .timeout(Duration.ofSeconds(60*3))
                     .temperature(0.7)
                     .build();
         } else {
